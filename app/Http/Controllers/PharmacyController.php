@@ -30,7 +30,7 @@ class PharmacyController extends Controller
      */
     public function store(StorePharmacyRequest $request)
     {
-        $pharmacy=new Pharmacy();
+        $pharmacy=new Pharmacy;
         $pharmacy->name= $request->name;
         $pharmacy->address= $request->address;
         $pharmacy->save();
