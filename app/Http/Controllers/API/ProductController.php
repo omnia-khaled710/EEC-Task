@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::with('pharmacies')->get();
+        $products=Product::paginate(10);
         return $products;
 
     }

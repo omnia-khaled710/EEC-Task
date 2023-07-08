@@ -15,8 +15,9 @@
 </div>
 <div class="col-12">
 
-    <form action="{{route('pharmacies.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('pharmacies.update',$pharmacy->id)}}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-6 mb-3" >
                 <label for="name">Name</label>

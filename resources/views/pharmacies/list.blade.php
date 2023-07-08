@@ -46,5 +46,6 @@
           @endforeach
         </tbody>
       </table>
+      {{$pharmacies->links()}}
 </div>
 @endsection

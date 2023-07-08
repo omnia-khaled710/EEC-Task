@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Pharmacy;
+use Illuminate\Http\Request;
+
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Validation\Rule;
+
+// use Illuminate\Support\Facades\Request;
 
 class PharmacyController extends Controller
 {
@@ -57,9 +63,14 @@ class PharmacyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePharmacyRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-        $pharmacy=Pharmacy::findOrFail($id);
+        $pharmacy=Pharmacy::find($id);
+        $request->validate([
+            'name' => ['required',Rule::unique('pharmacies')->ignore($pharmacy->id,'id')],
+            'address' => 'required',
+        ]);
+
         $pharmacy->name=$request->name;
         $pharmacy->address=$request->address;
         $pharmacy->save();

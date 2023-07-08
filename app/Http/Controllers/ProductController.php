@@ -85,7 +85,10 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-        unlink(public_path("images/{$product->image}"));
+        if ($product->image && file_exists(public_path("images/{$product->image}"))) {
+            unlink(public_path("images/{$product->image}"));
+        }
+        
         $newImageName = Media::uploadImage($request->file('image'), 'images');
         $product->image = $newImageName;
         $product->save();
@@ -106,7 +109,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        unlink(public_path("images/{$product->image}"));
+        if ($product->image && file_exists(public_path("images/{$product->image}"))) {
+            unlink(public_path("images/{$product->image}"));
+        }
         $product->delete();
         return redirect()->back()->with('success', 'Product deleted successfully');
     }
