@@ -74,7 +74,7 @@ class ProductController extends Controller
            $pharmacies = $request->input('pharmacies');
            $product->pharmacies()->sync($pharmacies);
 
-                return response()->json(['message'=>'Product created successfully']);
+                return response()->json(['message'=>'Product updated successfully']);
         }
     }
 

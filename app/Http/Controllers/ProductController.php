@@ -88,7 +88,7 @@ class ProductController extends Controller
         if ($product->image && file_exists(public_path("images/{$product->image}"))) {
             unlink(public_path("images/{$product->image}"));
         }
-        
+
         $newImageName = Media::uploadImage($request->file('image'), 'images');
         $product->image = $newImageName;
         $product->save();
@@ -99,7 +99,6 @@ class ProductController extends Controller
             return redirect()->route('products.index')->with('success', 'Product updated successfully');
         } else {
             $product->pharmacies()->detach();
-
             return redirect()->back()->with('error', 'Pharmacy not found');
         }
     }
