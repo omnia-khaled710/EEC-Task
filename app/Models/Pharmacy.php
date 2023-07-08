@@ -11,6 +11,7 @@ class Pharmacy extends Model
     protected $fillable=['name','address'];
 
     public function products(){
-        return $this->belongsToMany(Product::class);
+
+        return $this->belongsToMany(Product::class)->withPivot('price');
     }
 }

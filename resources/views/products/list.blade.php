@@ -44,7 +44,7 @@
           <tr>
              <th scope="row">{{$product->id}}</th>
 
-           <td> <a href="{{route('products.show',$product->id)}}">{{$product->title}}</a></td>
+           <td>{{$product->title}}</td>
             <td>{{$product->description}}</td>
             <td><img width="200px" height="200px" src="{{asset('images/'.$product->image)}}" alt="Product Image"></td>
             <td>{{$product->quantity}}</td>

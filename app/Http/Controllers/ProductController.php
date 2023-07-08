@@ -17,11 +17,8 @@ class ProductController extends Controller
     public function index(Product $product, Request $request)
     {
         $products=Product::with('pharmacies')->get();
-        if($request->expectsJson()){
-            return response()->json(compact("products"));
-        }else{
-            return view ("products.list",compact("products"));
-        }
+        return view ("products.list",compact("products"));
+
     }
 
     /**

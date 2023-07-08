@@ -74,7 +74,6 @@ class PharmacyController extends Controller
     {
         $pharmacy = Pharmacy::findOrFail($id);
         $pharmacy->delete();
-
     return redirect()->back()->with('success', 'Pharmacy deleted successfully');
     }
 }
