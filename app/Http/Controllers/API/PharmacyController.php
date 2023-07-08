@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePharmacyRequest;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class PharmacyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePharmacyRequest $request)
     {
         $pharmacy= new Pharmacy;
         $pharmacy->name=$request->name;
@@ -43,7 +44,7 @@ class PharmacyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePharmacyRequest $request, string $id)
     {
         $pharmacy=Pharmacy::find($id);
         if(is_Null($pharmacy)){

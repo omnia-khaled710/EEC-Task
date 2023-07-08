@@ -16,9 +16,8 @@ class ProductController extends Controller
      */
     public function index(Product $product, Request $request)
     {
-        $products=Product::with('pharmacies')->get();
-        return view ("products.list",compact("products"));
-
+        $products = Product::with('pharmacies')->get();
+        return view("products.list", compact("products"));
     }
 
     /**
@@ -26,8 +25,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $pharmacies=Pharmacy::all();
-        return view("products.create",compact('pharmacies'));
+        $pharmacies = Pharmacy::all();
+        return view("products.create", compact('pharmacies'));
     }
 
     /**
@@ -36,25 +35,24 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
 
- $product = new Product;
-$product->title = $request->title;
-$product->description = $request->description;
-$product->price = $request->price;
-$product->quantity = $request->quantity;
+        $product = new Product;
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
 
-$newImageName = Media::uploadImage($request->file('image'), 'images');
-$product->image = $newImageName;
-$product->save();
+        $newImageName = Media::uploadImage($request->file('image'), 'images');
+        $product->image = $newImageName;
+        $product->save();
 
-if ($request->has('pharmacies')) {
-    $pharmacies = Pharmacy::whereIn('id', $request->pharmacies)->get();
-    $product->pharmacies()->sync($pharmacies);
-    return redirect()->route('products.index')->with('success', 'Product created successfully');
-} else {
-    $product->delete();
-    return redirect()->back()->with('error', 'Pharmacy not found');
-}
-
+        if ($request->has('pharmacies')) {
+            $pharmacies = Pharmacy::whereIn('id', $request->pharmacies)->get();
+            $product->pharmacies()->sync($pharmacies);
+            return redirect()->route('products.index')->with('success', 'Product created successfully');
+        } else {
+            $product->delete();
+            return redirect()->back()->with('error', 'Pharmacy not found');
+        }
     }
     /**
      * Display the specified resource.
@@ -62,9 +60,8 @@ if ($request->has('pharmacies')) {
     public function show(Product $product)
     {
 
-    //    $product= Product::find($id);
-        return view('products.productDetails',compact('product'));
-
+        //    $product= Product::find($id);
+        return view('products.productDetails', compact('product'));
     }
 
     /**
@@ -80,7 +77,7 @@ if ($request->has('pharmacies')) {
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, string $id )
+    public function update(UpdateProductRequest $request, string $id)
     {
         $product = Product::findOrFail($id);
 
@@ -88,7 +85,7 @@ if ($request->has('pharmacies')) {
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-
+        unlink(public_path("images/{$product->image}"));
         $newImageName = Media::uploadImage($request->file('image'), 'images');
         $product->image = $newImageName;
         $product->save();
@@ -98,27 +95,27 @@ if ($request->has('pharmacies')) {
             $product->pharmacies()->sync($pharmacies);
             return redirect()->route('products.index')->with('success', 'Product updated successfully');
         } else {
-                $product->pharmacies()->detach();
+            $product->pharmacies()->detach();
 
             return redirect()->back()->with('error', 'Pharmacy not found');
         }
-}
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-         $product = Product::find($id);
-         $product->delete();
-         return redirect()->back()->with('success', 'Product deleted successfully');
-
+        $product = Product::find($id);
+        unlink(public_path("images/{$product->image}"));
+        $product->delete();
+        return redirect()->back()->with('success', 'Product deleted successfully');
     }
 
     public function search(Request $request)
     {
         $query = $request->input('query');
 
-        $products = Product::where('title','like', "{$query}%")->get();
+        $products = Product::where('title', 'like', "{$query}%")->get();
 
         return view('products.search', compact('products', 'query'));
     }
