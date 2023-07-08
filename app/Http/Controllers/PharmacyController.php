@@ -13,7 +13,7 @@ class PharmacyController extends Controller
      */
     public function index()
     {
-       $pharmacies= Pharmacy::all();
+       $pharmacies= Pharmacy::paginate(10);
         return view('pharmacies.list',compact('pharmacies'));
     }
 
