@@ -69,7 +69,8 @@ class PharmacyController extends Controller
     public function destroy(string $id)
     {
         $pharmacy=Pharmacy::find($id);
-        if(isNull($pharmacy)){
+        // dd(  $pharmacy);
+        if(is_Null($pharmacy)){
             return response()->json(['message'=>'Invailed pharmacy Id ']);
         }else{
             $pharmacy->delete();
