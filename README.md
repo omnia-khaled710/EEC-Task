@@ -37,7 +37,8 @@ PHP artisan products:search-cheapest 22
 run seeders
 
 ```bash
-php artisan db seed
+php artisan db:seed
+php artisan db:seed --class=PharmacySeeder
 ```
 ## License
 
